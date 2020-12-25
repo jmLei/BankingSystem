@@ -1,13 +1,15 @@
+<%-- 
+    Document   : customerManagement
+    Created on : Dec 24, 2020, 8:55:16 PM
+    Author     : jieme
+--%>
+
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Banking System</title>
-        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css">
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
@@ -34,7 +36,7 @@ and open the template in the editor.
         <div class="home">
             <div class="right">
                 <div class="centered">
-                    <form action="Login.java" method="post">
+                    <form action="bankingsystem.jsp" method="post">
                         <div class="title">
                             <h2>Self Services Banking System</h2>
                         </div>
@@ -51,7 +53,7 @@ and open the template in the editor.
                         </div>
                     </form>
 
-                    <form action="Login.java" method="post">
+                    <form action="bankingsystem.jsp" method="post">
                         <div class="login-form">
 
                             <input type="text" name="id" placeholder="ID" autocomplete="off" class="input"><br>
@@ -68,5 +70,4 @@ and open the template in the editor.
                 <img src="https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940">
             </div>
         </div>
-    </body>
 </html>
