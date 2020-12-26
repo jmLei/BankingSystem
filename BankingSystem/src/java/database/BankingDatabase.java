@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package database;
 
 import java.sql.Statement;
@@ -6,13 +11,11 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-
 /**
  *
- * @author Jiemei Lei
+ * @author jieme
  */
 public class BankingDatabase {
-
     // Connection properties
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String url = "jdbc:mysql://localhost:3306/bankingsystem";
@@ -21,26 +24,27 @@ public class BankingDatabase {
 
     // JDBC Objects
     private static Connection con;
-    private static ResultSet rs;
  
     /**
 	 * Test database connection.
 	 */
-	public static void testConnection() {
-		System.out.println(":: TEST - CONNECTING TO DATABASE");
+	public String testConnection() {
+            String msg = "";
+	msg =":: TEST - CONNECTING TO DATABASE";
 		try {
 			Class.forName(driver);
 			con = DriverManager.getConnection(url, username, password);
 			con.close();
-			System.out.println(":: TEST - SUCCESSFULLY CONNECTED TO DATABASE");
+			msg =":: TEST - SUCCESSFULLY CONNECTED TO DATABASE";
 			} catch (Exception e) {
-				System.out.println(":: TEST - FAILED CONNECTED TO DATABASE");
+				msg =":: TEST - FAILED CONNECTED TO DATABASE";
 				e.printStackTrace();
 			}
+                return msg;
 	  }
         
-        public static void test(){
-            System.out.println("Test");
+        public String test(){
+            return "Test";
         }
 
     /**
@@ -69,16 +73,17 @@ public class BankingDatabase {
         } else {
             try {
                 Class.forName(driver);                                                                  //load the driver
-                con = DriverManager.getConnection(url, username, password);                  //Create the connection
-                String query = "INSERT INTO p1.customer (name, gender, age, pin) VALUES (?,?,?,?)";     //The query to run
+                con = DriverManager.getConnection(url, username, password); //Create the connection
+                String query = "INSERT INTO customer (name, gender, age, pin) VALUES (?,?,?,?)";     //The query to run
                 PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS); //Create a prepared statement
                 pstmt.setString(1, name);
                 pstmt.setString(2, gender);
                 pstmt.setString(3, age);
                 pstmt.setString(4, pin);
+                msg = msg + "1";
                 int updated = pstmt.executeUpdate();
                 if (updated == 1) {
-                    rs = pstmt.getGeneratedKeys();
+                    ResultSet rs = pstmt.getGeneratedKeys();
                     if (rs.next()) {
                         id = rs.getInt(1);
                         msg = ":: CREATE NEW CUSTOMER - SUCCESS! THIS IS YOUR CUSTOMER ID: " + id;
@@ -86,7 +91,7 @@ public class BankingDatabase {
                     rs.close();  //Close the result set
                 }
                 pstmt.close();			                                                                //Close the statement after we are done with the statement
-                con.close();                                                                            //Close the connection after we are done with everything
+                con.close();            //Close the connection after we are done with everything
             } catch (Exception e) {
                 msg = ":: CREATE NEW CUSTOMER - FAILED TO CONNECT TO DATABASE";
                 e.printStackTrace();
@@ -189,5 +194,4 @@ public class BankingDatabase {
     public static boolean isNumeric(String str) {
         return str != null && str.matches("[-+]?\\d*\\.?\\d+");
     }
-    
 }

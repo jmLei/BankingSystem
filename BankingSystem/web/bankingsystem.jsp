@@ -19,7 +19,11 @@
         <%
             BankingDatabase bdb = new BankingDatabase();
             String msg = bdb.newCustomer(customer);
-            out.print(msg);
         %>
+
+        <script type="text/javascript">
+            var msg = "<%=msg%>";
+            alert(msg);
+        </script>
     </body>
 </html>

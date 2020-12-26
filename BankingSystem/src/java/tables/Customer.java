@@ -7,10 +7,10 @@ import java.io.Serializable;
  */
 public class Customer implements Serializable {
 
-    private String name;
-    private String gender;
-    private String age;
-    private String pin;
+    private String name = "";
+    private String gender = "";
+    private String age = "";
+    private String pin = "";
     
     public String getName() {
         return name;
