@@ -7,11 +7,16 @@ import java.io.Serializable;
  */
 public class Customer implements Serializable {
 
+    private String id = "";
     private String name = "";
     private String gender = "";
     private String age = "";
     private String pin = "";
     
+     public String getId() {
+        return id;
+    }
+     
     public String getName() {
         return name;
     }

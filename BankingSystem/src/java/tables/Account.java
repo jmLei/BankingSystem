@@ -5,10 +5,15 @@ import java.io.Serializable;
  * @author Jiemei Lei
  */
 public class Account implements Serializable{
+    private String number = "";
     private String id;
     private String balance;
     private String type;
     private String status;
+    
+    public String getNumber() {
+        return number;
+    }
     
     public String getId() {
         return id;

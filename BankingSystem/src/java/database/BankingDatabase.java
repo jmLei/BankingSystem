@@ -59,8 +59,12 @@ public class BankingDatabase {
         String gender = customer.getGender();
         String age = customer.getAge();
         String pin = customer.getPin();
+        //Check empty input
+        if(name.equals("") || gender.equals("") || age.equals("") || pin.equals("")){
+            msg = "Please Enter All Information";
+        }
         //Check valid input
-        if (!gender.equals("M") && !gender.equals("F")) {
+        else if (!gender.equals("M") && !gender.equals("F")) {
             msg = ":: CREATE NEW CUSTOMER - ERROR - INVALID GENDER";
         } else if (!isNumeric(age)) {
             msg = ":: CREATE NEW CUSTOMER - ERROR - INVALID AGE";
@@ -106,13 +110,12 @@ public class BankingDatabase {
      * @param id customer id
      * @param pin customer pin
      */
-    public static boolean login(String id, String pin) {
-        System.out.println(":: LOGIN - RUNNING");
+    public static boolean login(String id, String pin){
         boolean flag = false;
         try {
             Class.forName(driver);                                                                  //load the driver
             Connection con = DriverManager.getConnection(url, username, password);                  //Create the connection
-            String query1 = "SELECT * FROM p1.customer WHERE id = ? AND pin = ?";     //The query to run
+            String query1 = "SELECT * FROM customer WHERE id = ? AND pin = ?";     //The query to run
             PreparedStatement pstmt1 = con.prepareStatement(query1);
             pstmt1.setString(1, id);
             pstmt1.setString(2, pin);
@@ -121,6 +124,7 @@ public class BankingDatabase {
                 System.out.println(":: LOGIN ACCOUNT - SUCCESS");
                 flag = true;
             } else {
+                
                 System.out.println(":: LOGIN - ERROR - INVALID ID OR PIN");
             }
             results1.close();

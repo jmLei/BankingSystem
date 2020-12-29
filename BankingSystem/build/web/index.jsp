@@ -31,53 +31,15 @@
 
                 });
             });
+        </script>
 
-            /*function submitData() {
-                var msg = "<%=msg%>";
-                alert(msg);
-            }*/
-
-            function submitData() {
-                var n = document.forms["create"]["name"].value;
-                var g = document.forms["create"]["gender"].value;
-                var a = document.forms["create"]["age"].value;
-                var p = document.forms["create"]["pin"].value;
-                if (n == null || n == "") {
-                    alert("Please enter Name");
-                    return false;
-                } 
-                else if (g == ""){
-                    alert("Please select Gender");
-                    return false;
-                }
-                else if (a == null || a == ""){
-                    alert("Please enter Age");
-                    return false;
-                }
-                else if (p == null || p == ""){
-                    alert("Please enter Pin");
-                    return false;
-                }
-                else
-                {
-                    var http = new XMLHttpRequest();
-                    http.open("POST", "http://localhost:8080/BankingSystem/bankingsystem.jsp", true);
-                    http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                    var params = "param1=" + n; // probably use document.getElementById(...).value
-                    http.send(params);
-                    http.onload = function () {
-                        alert(http.responseText);
-                    }
-                }
-            }
-        </script>      
 
     </head>
     <body>
         <div class="home">
             <div class="right">
                 <div class="centered">
-                    <form name="create" action="bankingsystem.jsp" method="post" onsubmit="submitData(this);">
+                    <form action="index.jsp" method="post">
                         <div class="title"
                              <h2>Self Services Banking System</h2>
                         </div>
@@ -85,21 +47,23 @@
                         <div class="login">Login</div>
 
                         <div class="signup-form">
-                            <input type="text" name="name" placeholder="Name" autocomplete="off" class="input"><br>
-                            <select name="gender" placeholder="Gender" autocomplete="off" class="input">
+                            <input type="text" name="name" placeholder="Name" id="name" autocomplete="off" class="input"><br>
+                            <select name="gender" placeholder="Gender" id="gender" autocomplete="off" class="input">
                                 <option value="" disabled selected>Gender</option>
                                 <option value="F">Female</option>
                                 <option value="M">Male</option>   
                             </select><br>
 
-                            <input type="text" name="age" placeholder="Age" autocomplete="off" class="input"><br>
-                            <input type="password" name="pin" placeholder="Enter Pin" autocomplete="off" class="input"><br>
+                            <input type="text" name="age" placeholder="Age" id="age" autocomplete="off" class="input"><br>
+                            <input type="password" name="pin" placeholder="Enter Pin" id="pin" autocomplete="off" class="input"><br>
                             <br>
-                            <input type="submit" name="create" value="Create" class="btn">
+                            <div class ="create">
+                                <input type="submit" name="create" value="Create" class="btn">
+                            </div>
                         </div>
                     </form>
 
-                    <form action="index.jsp" method="post">
+                    <form action="" method="post">
                         <div class="login-form">
 
                             <input type="text" name="id" placeholder="ID" autocomplete="off" class="input"><br>
@@ -116,6 +80,40 @@
                 <img src="https://images.pexels.com/photos/1103970/pexels-photo-1103970.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940">
             </div>
         </div>
+
+        <jsp:useBean id="customer" class="tables.Customer" />
+        <jsp:setProperty property="*" name="customer" />
+
+        <%
+            String x = request.getParameter("create");
+            String y = request.getParameter("login");
+            String msg = "";
+            boolean flag = false;
+            BankingDatabase bdb = new BankingDatabase();
+            if(x!=null && x.equals("Create")){
+                msg = bdb.newCustomer(customer);
+            }
+            else if(y!=null && y.equals("Login")){
+                String id = request.getParameter("id");
+                String pin = request.getParameter("pin2");
+                flag = bdb.login(id,pin);
+                msg = ":: LOGIN - ERROR - INVALID ID OR PIN";
+                if (flag == true){
+                    msg = ":: LOGIN ACCOUNT - SUCCESS";
+                }
+            }  
+        %>
+        <script type="text/javascript">
+            var msg = "<%=msg%>";
+            var flag = "<%=flag%>";
+            if (msg.localeCompare("") !== 0) {
+                alert(msg);
+            } 
+            if(flag.localeCompare("true") === 0){
+                window.location.href = "bankingsystem.jsp";
+            }
+            
+        </script>
 
     </body>
 </html>
