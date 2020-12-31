@@ -17,26 +17,48 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     </head>
     <body>
-        <div class="sidebar">
-            <a href="#home"><i class="fa fa-fw fa-home"></i> Home</a>
-            <a href="#services"><i class="fa fa-fw fa-wrench"></i> Services</a>
-            <a href="#clients"><i class="fa fa-fw fa-user"></i> Clients</a>
-            <a href="#contact"><i class="fa fa-fw fa-envelope"></i> Contact</a>
-        </div>
-        
-        <div  class="main">
-
+        <div class="header">
+            <h1>Header</h1>
         </div>
 
-        <jsp:useBean id="customer" class="tables.Customer" />
-        <jsp:setProperty property="*" name="customer" />
+        <div class="topnav">
+            <a href="#">Home</a>
+            <a href="#">Account</a>
+            <a href="#">Deposit</a>
+            <a href="#">Withdraw</a>
+            <a href="#">Transfer</a>
+            <a href="#">Summary</a>
+        </div>
 
-        <%
+        <div  class="row">
+            <div class="column side">
+                <h2>Left Side</h2>
+
+            </div>
+            <div class="column middle">
+                <h2>Main Content</h2>
+            </div>
+
+            <div class="column side">
+                <h2>Right Side</h2>
+
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Footer</p>
+        </div>
+    </div>
+
+    <jsp:useBean id="customer" class="tables.Customer" />
+    <jsp:setProperty property="*" name="customer" />
+
+    <%
             
-        %>
+    %>
 
-        <script type="text/javascript">
+    <script type="text/javascript">
 
-        </script>
-    </body>
+    </script>
+</body>
 </html>
