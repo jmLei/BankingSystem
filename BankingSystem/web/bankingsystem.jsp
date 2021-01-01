@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="style.css">
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
     </head>
     <body>
         <div class="header">
@@ -23,7 +24,15 @@
 
         <div class="topnav">
             <a href="#">Home</a>
-            <a href="#">Account</a>
+            <div class="dropdown">
+                <button class="dropbtn">Account
+                    <i class="fa fa-caret-down"></i>
+                </button>
+                <div class="dropdown-content">
+                    <a href="#">Open Account</a>
+                    <a href="#">Close Account</a>
+                </div>
+            </div>
             <a href="#">Deposit</a>
             <a href="#">Withdraw</a>
             <a href="#">Transfer</a>
