@@ -15,41 +15,48 @@
         <link rel="stylesheet" href="style.css">
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        
+        <script>
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            }
+        </script>
+
 
     </head>
     <body>
         <div class="header">
-            <h1>Header</h1>
+            <h1>BANKING SYSTEM</h1>
+            <form action="index.jsp" method="post">
+                <button class="logout">Logout</button>
+            </form>
         </div>
 
         <div class="topnav">
-            <a href="#">Home</a>
+            <a href="bankingsystem.jsp">Home</a>
             <div class="dropdown">
                 <button class="dropbtn">Account
                     <i class="fa fa-caret-down"></i>
                 </button>
                 <div class="dropdown-content">
-                    <a href="#">Open Account</a>
-                    <a href="#">Close Account</a>
+                    <a href="openaccount.jsp">Open Account</a>
+                    <a href="closeaccount.jsp">Close Account</a>
                 </div>
             </div>
-            <a href="#">Deposit</a>
-            <a href="#">Withdraw</a>
-            <a href="#">Transfer</a>
-            <a href="#">Summary</a>
+            <a href="deposit.jsp">Deposit</a>
+            <a href="withdraw.jsp">Withdraw</a>
+            <a href="transfer.jsp">Transfer</a>
+            <a href="summary.jsp">Summary</a>
         </div>
 
         <div  class="row">
             <div class="column side">
-                <h2>Left Side</h2>
-
             </div>
             <div class="column middle">
-                <h2>Main Content</h2>
+                <h1>Welcome to the Self Services Banking System! </h1>
             </div>
 
             <div class="column side">
-                <h2>Right Side</h2>
 
             </div>
         </div>
@@ -63,7 +70,7 @@
     <jsp:setProperty property="*" name="customer" />
 
     <%
-            
+   
     %>
 
     <script type="text/javascript">

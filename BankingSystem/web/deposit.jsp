@@ -1,6 +1,6 @@
 <%-- 
-    Document   : bankingsystem
-    Created on : Dec 24, 2020, 10:43:51 PM
+    Document   : deposit
+    Created on : Jan 5, 2021, 2:56:14 PM
     Author     : jieme
 --%>
 
@@ -15,13 +15,12 @@
         <link rel="stylesheet" href="style.css">
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        
+
         <script>
             if (window.history.replaceState) {
                 window.history.replaceState(null, null, window.location.href);
             }
         </script>
-
 
     </head>
     <body>
@@ -33,7 +32,7 @@
         </div>
 
         <div class="topnav">
-            <a href="bankingsystem.jsp">Home</a>
+             <a href="bankingsystem.jsp">Home</a>
             <div class="dropdown">
                 <button class="dropbtn">Account
                     <i class="fa fa-caret-down"></i>
@@ -53,7 +52,18 @@
             <div class="column side">
             </div>
             <div class="column middle">
-                <h1>Welcome to the Self Services Banking System! </h1>
+                <div class="page head">Deposit Money</div>
+                <div class="page body">
+                    <h3>Enter Deposit Information</h3>
+                    <br>
+                    <form action="" method ="post">
+                        <label for="number">Destination Account Number:</label>
+                        <input type="text" name="number" id="number" autocomplete="off" class="input"><br>
+                        <label for="number">Deposit Amount:</label>
+                        <input type="text" name="amount" id="amount" autocomplete="off" class="input"><br>
+                        <input type="submit" name="deposit" value="Deposit" class="btn">
+                    </form>
+                </div>
             </div>
 
             <div class="column side">
@@ -66,15 +76,27 @@
         </div>
     </div>
 
-    <jsp:useBean id="customer" class="tables.Customer" />
-    <jsp:setProperty property="*" name="customer" />
+    <jsp:useBean id="account" class="tables.Account" />
+    <jsp:setProperty property="*" name="account" />
 
     <%
-   
+        String x = request.getParameter("deposit");
+        String msg = "";
+        BankingDatabase bdb = new BankingDatabase();
+        String number = request.getParameter("number");
+        String amount = request.getParameter("amount");
+        if(x!=null && x.equals("Deposit")){
+            msg = bdb.deposit(number,amount);
+            out.println("deposit");
+        }
+        out.println("msg is "+ msg);
     %>
 
     <script type="text/javascript">
-
+        var msg = "<%=msg%>";
+        if (msg.localeCompare("") !== 0) {
+            alert(msg);
+        }
     </script>
 </body>
 </html>

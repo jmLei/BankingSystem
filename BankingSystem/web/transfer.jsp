@@ -1,6 +1,6 @@
 <%-- 
-    Document   : bankingsystem
-    Created on : Dec 24, 2020, 10:43:51 PM
+    Document   : transfer
+    Created on : Jan 5, 2021, 3:36:04 PM
     Author     : jieme
 --%>
 
@@ -15,13 +15,12 @@
         <link rel="stylesheet" href="style.css">
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        
+
         <script>
             if (window.history.replaceState) {
                 window.history.replaceState(null, null, window.location.href);
             }
         </script>
-
 
     </head>
     <body>
@@ -33,7 +32,7 @@
         </div>
 
         <div class="topnav">
-            <a href="bankingsystem.jsp">Home</a>
+             <a href="bankingsystem.jsp">Home</a>
             <div class="dropdown">
                 <button class="dropbtn">Account
                     <i class="fa fa-caret-down"></i>
@@ -53,7 +52,20 @@
             <div class="column side">
             </div>
             <div class="column middle">
-                <h1>Welcome to the Self Services Banking System! </h1>
+                <div class="page head">Transfer Money</div>
+                <div class="page body transfer">
+                    <h3>Enter Account Information</h3>
+                    <br>
+                    <form action="" method ="post">
+                        <label for="destnumber">Destination Account Number:</label>
+                        <input type="text" name="destnumber" id="destnumber" autocomplete="off" class="input"><br>
+                        <label for="srcnumber">Source Account Number:</label>
+                        <input type="text" name="srcnumber" id="srcnumber" autocomplete="off" class="input"><br>
+                        <label for="amount">Transfer Amount:</label>
+                        <input type="text" name="amount" id="amount" autocomplete="off" class="input"><br>
+                        <input type="submit" name="transfer" value="Transfer" class="btn">
+                    </form>
+                </div>
             </div>
 
             <div class="column side">
@@ -66,15 +78,30 @@
         </div>
     </div>
 
-    <jsp:useBean id="customer" class="tables.Customer" />
-    <jsp:setProperty property="*" name="customer" />
+    <jsp:useBean id="account" class="tables.Account" />
+    <jsp:setProperty property="*" name="account" />
 
     <%
-   
+        String x = request.getParameter("transfer");
+        String msg = "";
+        BankingDatabase bdb = new BankingDatabase();
+        String id = (String)session.getAttribute("ID");
+        String destNum = request.getParameter("destnumber");
+        String srcNum = request.getParameter("srcnumber");
+        String amount = request.getParameter("amount");
+        if(x!=null && x.equals("Transfer")){
+            msg = bdb.transfer(srcNum, destNum, amount, id);
+            out.println("transfer");
+        }
+        out.println("id is "+ id);
+        out.println("msg is "+ msg);
     %>
 
     <script type="text/javascript">
-
+        var msg = "<%=msg%>";
+        if (msg.localeCompare("") !== 0) {
+            alert(msg);
+        }
     </script>
 </body>
 </html>

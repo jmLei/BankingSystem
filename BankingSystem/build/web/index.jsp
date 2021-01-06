@@ -32,8 +32,11 @@
                 });
             });
         </script>
-
-
+        <script>
+            if (window.history.replaceState) {
+                window.history.replaceState(null, null, window.location.href);
+            }
+        </script>
     </head>
     <body>
         <div class="home">
@@ -41,7 +44,7 @@
                 <div class="centered">
                     <form action="index.jsp" method="post">
                         <div class="title"
-                             <h2>Self Services Banking System</h2>
+                             <h1>Self Services Banking System</h1>
                         </div>
                         <div class="signup">Create Account</div>
                         <div class="login">Login</div>
@@ -53,7 +56,6 @@
                                 <option value="F">Female</option>
                                 <option value="M">Male</option>   
                             </select><br>
-
                             <input type="text" name="age" placeholder="Age" id="age" autocomplete="off" class="input"><br>
                             <input type="password" name="pin" placeholder="Enter Pin" id="pin" autocomplete="off" class="input"><br>
                             <br>
@@ -96,23 +98,24 @@
             else if(y!=null && y.equals("Login")){
                 String id = request.getParameter("id");
                 String pin = request.getParameter("pin2");
+                session.setAttribute("ID",id);
                 flag = bdb.login(id,pin);
                 msg = ":: LOGIN - ERROR - INVALID ID OR PIN";
                 if (flag == true){
                     msg = ":: LOGIN ACCOUNT - SUCCESS";
                 }
-            }  
+            }
         %>
         <script type="text/javascript">
             var msg = "<%=msg%>";
             var flag = "<%=flag%>";
             if (msg.localeCompare("") !== 0) {
                 alert(msg);
-            } 
-            if(flag.localeCompare("true") === 0){
+            }
+            if (flag.localeCompare("true") === 0) {
                 window.location.href = "bankingsystem.jsp";
             }
-            
+
         </script>
 
     </body>
