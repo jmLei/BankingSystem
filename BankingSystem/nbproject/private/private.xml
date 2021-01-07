@@ -3,12 +3,19 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/cs/Project/BankingSystem/BankingSystem/src/java/tables/Account.java</file>
             <file>file:/C:/cs/Project/BankingSystem/BankingSystem/web/index.jsp</file>
             <file>file:/C:/cs/Project/BankingSystem/BankingSystem/web/bankingsystem.jsp</file>
             <file>file:/C:/cs/Project/BankingSystem/BankingSystem/web/style.css</file>
+            <file>file:/C:/cs/Project/BankingSystem/BankingSystem/web/transfer.jsp</file>
             <file>file:/C:/cs/Project/BankingSystem/BankingSystem/src/java/database/BankingDatabase.java</file>
             <file>file:/C:/cs/Project/BankingSystem/BankingSystem/src/java/tables/Customer.java</file>
+            <file>file:/C:/cs/Project/BankingSystem/BankingSystem/web/openaccount.jsp</file>
+            <file>file:/C:/cs/Project/BankingSystem/BankingSystem/web/closeaccount.jsp</file>
+            <file>file:/C:/cs/Project/BankingSystem/BankingSystem/web/deposit.jsp</file>
+            <file>file:/C:/cs/Project/BankingSystem/BankingSystem/src/java/tables/Account.java</file>
+            <file>file:/C:/cs/Project/BankingSystem/BankingSystem/web/withdraw.jsp</file>
+            <file>file:/C:/cs/Project/BankingSystem/BankingSystem/web/summary.jsp</file>
+            <file>file:/C:/cs/Project/BankingSystem/BankingSystem/nbproject/build-impl.xml</file>
         </group>
     </open-files>
 </project-private>

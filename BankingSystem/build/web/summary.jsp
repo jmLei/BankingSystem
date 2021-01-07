@@ -7,6 +7,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@page import= "database.*"%>
 <%@ page import ="java.util.*" %>
+
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -54,23 +56,33 @@
             </div>
             <div class="column middle">
                 <div class="page head">Account Summary</div>
-                <p id="demo"></p>
                 <div class="page body">
+                    <jsp:useBean id="account" class="tables.Account" />
+                    <jsp:setProperty property="*" name="account" />
+
+                    <%
+                        String id = (String)session.getAttribute("ID");
+                        List<List<String>>  tableData = new ArrayList<List<String>>();
+                        BankingDatabase bdb = new BankingDatabase();
+                        tableData = bdb.accountSummary(id);
+                    %>
                     <table id="summary">
                         <tr>
                             <th></th>
                             <th>Account Number</th>
                             <th>Balance</th>
                         </tr>
-                        <tr>
-                            <td>today</td>
-                            <td>1000</td>
-                            <td>$100</td>
+                        <% for(int i = 0; i < tableData.size()-1; i++) { %>
+                        <tr>      
+                            <td></td>
+                            <td><%=tableData.get(i).get(0)%></td>
+                            <td><%=tableData.get(i).get(1)%></td>
                         </tr>
-                        <tr>
-                            <td>today</td>
-                            <td>1001</td>
-                            <td>$100</td>
+                        <% } %>
+                        <tr>      
+                            <td>Total</td>
+                            <td></td>
+                            <td><%=tableData.get(tableData.size()-1).get(1)%></td>
                         </tr>
                     </table>
                 </div>
@@ -86,40 +98,6 @@
         </div>
     </div>
 
-    <jsp:useBean id="account" class="tables.Account" />
-    <jsp:setProperty property="*" name="account" />
 
-    <%
-        String id = (String)session.getAttribute("ID");
-        List<List<String>>  tableData = new ArrayList<List<String>>();
-        BankingDatabase bdb = new BankingDatabase();
-        tableData = bdb.accountSummary(id);
-        out.print(tableData);
-    %>
-
-    <script type="text/javascript">
-        var tableData = "<%=tableData%>";  
-        //var table = document.getElementById("summary");
-        document.getElementById("demo").innerHTML = tableData[0][3];
-        /*
-        if (tableData.size() > 1) {
-            document.getElementById("demo").innerHTML = tableData;
-            for (int i = 0; i < tableData.size() - 1; i++) {
-                var row = table.insertRow();
-                var cell1 = row.insertCell(1);
-                var cell2 = row.insertCell(2);
-                cell1.innerHTML = tableData[i][0];
-                cell2.innerHTML = tableData[i][1];
-            }
-        }
-        var row = table.insertRow(0);
-        var cell0 = row.insertCell(0);
-        var cell1 = row.insertCell(1);
-        var cell2 = row.insertCell(2);
-        cell1.innerHTML = "Total";
-        cell1.innerHTML = tableData[tableData.size() - 1][0];
-        cell2.innerHTML = tableData[tableData.size() - 1][1];
-         */
-    </script>
 </body>
 </html>

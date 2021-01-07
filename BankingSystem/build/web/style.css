@@ -297,13 +297,18 @@ body {
     text-align: center;
 }
 
+table {
+  
+  border-collapse: collapse;
+  width: 100%;
+}
 tatble td,th {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 20px;
 }
 table tr:nth-child(even){background-color: #f2f2f2;}
 
-table tr:hover {background-color: #ddd;}
+table tr:hover {background-color: red;}
 
 table th {
   padding-top: 12px;
