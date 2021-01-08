@@ -148,7 +148,7 @@ public class BankingDatabase {
             System.out.println("Check");
             msg = "Please Enter All Information";
         } //Check valid input
-        else if (!isNumeric(amount) || Integer.parseInt(amount) < 0) {
+        else if (!isNumeric(amount) || Float.valueOf(amount) < 0) {
             msg = ":: OPEN ACCOUNT - ERROR - INVALID AMOUNT";
         } else {
             try {
@@ -235,7 +235,7 @@ public class BankingDatabase {
         //Check empty input
         if (accNum.equals("") || amount.equals("")) {
             msg = "Please Enter All Information";
-        } else if (!isNumeric(amount) || Integer.parseInt(amount) < 0) {
+        } else if (!isNumeric(amount) || Float.valueOf(amount) < 0) {
             msg = ":: DEPOSIT - ERROR - INVALID AMOUNT";
         } else {
             try {
@@ -247,12 +247,12 @@ public class BankingDatabase {
                 pstmt1.setString(2, "A");
                 ResultSet results1 = pstmt1.executeQuery();  //Get the result that has the id record
                 if (results1.next()) {  //Check if the id exists
-                    int balance = 0;
-                    balance = results1.getInt("balance");
-                    balance += Integer.parseInt(amount);
+                    float balance = 0;
+                    balance = results1.getFloat("balance");
+                    balance += Float.valueOf(amount);
                     String query2 = "UPDATE account SET balance = ? WHERE number = ?";           //The query to run
                     PreparedStatement pstmt2 = con.prepareStatement(query2); //Create a prepared statement
-                    pstmt2.setInt(1, balance);
+                    pstmt2.setFloat(1, balance);
                     pstmt2.setString(2, accNum);
                     pstmt2.executeUpdate();
                     msg = ":: DEPOSIT - SUCCESS";
@@ -283,7 +283,7 @@ public class BankingDatabase {
         //Check empty input
         if (accNum.equals("") || amount.equals("")) {
             msg = "Please Enter All Information";
-        } else if (!isNumeric(amount) || Integer.parseInt(amount) < 0) {
+        } else if (!isNumeric(amount) || Float.valueOf(amount) < 0) {
             msg = ":: WITHDRAW - ERROR - INVALID AMOUNT";
         } else {
             try {
@@ -296,13 +296,13 @@ public class BankingDatabase {
                 pstmt1.setString(3, cusID);
                 ResultSet results1 = pstmt1.executeQuery();  //Get the result that has the id record
                 if (results1.next()) {  //Check if the id exists
-                    int balance = 0;
-                    balance = results1.getInt("balance");
-                    balance -= Integer.parseInt(amount);
+                    float balance = 0;
+                    balance = results1.getFloat("balance");
+                    balance -= Float.valueOf(amount);
                     if (balance >= 0) {
                         String query2 = "UPDATE account SET balance = ? WHERE number = ?";           //The query to run
                         PreparedStatement pstmt2 = con.prepareStatement(query2); //Create a prepared statement
-                        pstmt2.setInt(1, balance);
+                        pstmt2.setFloat(1, balance);
                         pstmt2.setString(2, accNum);
                         pstmt2.executeUpdate();
                         msg = ":: WITHDRAW - SUCCESS";
@@ -337,7 +337,7 @@ public class BankingDatabase {
         //Check empty input
         if (srcAccNum.equals("") || destAccNum.equals("") || amount.equals("")) {
             msg = "Please Enter All Information";
-        } else if (!isNumeric(amount) || Integer.parseInt(amount) < 0) {
+        } else if (!isNumeric(amount) || Float.valueOf(amount) < 0) {
             msg = ":: TRANSFER - ERROR - INVALID AMOUNT";
         } else {
             try {
@@ -355,20 +355,20 @@ public class BankingDatabase {
                 ResultSet results1 = pstmt1.executeQuery();  //Get the result that has the id record
                 ResultSet results2 = pstmt2.executeQuery();
                 if (results1.next() && results2.next()) {  //Check if the id exists
-                    int srcBalance = 0;
-                    int destBalance = 0;
-                    srcBalance = results1.getInt("balance");
-                    destBalance = results2.getInt("balance");
-                    srcBalance -= Integer.parseInt(amount);
-                    destBalance += Integer.parseInt(amount);
+                    float srcBalance = 0;
+                    float destBalance = 0;
+                    srcBalance = results1.getFloat("balance");
+                    destBalance = results2.getFloat("balance");
+                    srcBalance -= Float.valueOf(amount);
+                    destBalance += Float.valueOf(amount);
                     if (srcBalance >= 0) {
                         String query3 = "UPDATE account SET balance = ? WHERE number = ?";
                         String query4 = "UPDATE account SET balance = ? WHERE number = ?";
                         PreparedStatement pstmt3 = con.prepareStatement(query3); //Create a prepared statement
                         PreparedStatement pstmt4 = con.prepareStatement(query4);
-                        pstmt3.setInt(1, srcBalance);
+                        pstmt3.setFloat(1, srcBalance);
                         pstmt3.setString(2, srcAccNum);
-                        pstmt4.setInt(1, destBalance);
+                        pstmt4.setFloat(1, destBalance);
                         pstmt4.setString(2, destAccNum);
                         pstmt3.executeUpdate();
                         pstmt4.executeUpdate();
@@ -412,12 +412,12 @@ public class BankingDatabase {
             pstmt1.setString(2, "A");
             ResultSet results1 = pstmt1.executeQuery();  //Get the result that has the id record
             String number = "";
-            int balance = 0;
-            int total = 0;
+            float balance = 0;
+            float total = 0;
             if (results1.next()) {
                 do {
                     number = results1.getString("number");
-                    balance = results1.getInt("balance");
+                    balance = results1.getFloat("balance");
                     total += balance;
                     array.add(new ArrayList<String>());
                     array.get(array.size()-1).add(number);
@@ -443,9 +443,39 @@ public class BankingDatabase {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(array.size()==0){
+            array.add(new ArrayList<String>());
+            array.get(0).add("");
+            array.get(0).add("0");
+        }
         return array;
     }
 
+    /**
+     * Display account summary.
+     *
+     * @param cusID customer ID
+     */
+    public String getName(String cusID) {
+        String name = "";
+        try {
+            Class.forName(driver);                                                                  //load the driver
+            Connection con = DriverManager.getConnection(url, username, password);                  //Create the connection
+            String query1 = "SELECT name FROM customer WHERE id = ?";     //The query to run
+            PreparedStatement pstmt1 = con.prepareStatement(query1);
+            pstmt1.setString(1, cusID);
+            ResultSet results1 = pstmt1.executeQuery();  //Get the result that has the id record
+            if (results1.next()) {
+                name = results1.getString("name");
+            } 
+            results1.close();
+            pstmt1.close();			                                                                //Close the statement after we are done with the statement
+            con.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return name;
+    }
     /**
      * Check if a string is a number
      *

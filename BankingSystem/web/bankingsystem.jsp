@@ -15,18 +15,25 @@
         <link rel="stylesheet" href="style.css">
         <script src="https://kit.fontawesome.com/a076d05399.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        
+
         <script>
             if (window.history.replaceState) {
                 window.history.replaceState(null, null, window.location.href);
             }
         </script>
-
-
     </head>
     <body>
+        <jsp:useBean id="customer" class="tables.Customer" />
+        <jsp:setProperty property="*" name="customer" />
+
+        <%
+            BankingDatabase bdb = new BankingDatabase();
+            String id = (String)session.getAttribute("ID");
+            String name = bdb.getName(id);
+        %>
         <div class="header">
             <h1>BANKING SYSTEM</h1>
+            <div class="cusName"> Hi, <%=name%></div>
             <form action="index.jsp" method="post">
                 <button class="logout">Logout</button>
             </form>
@@ -62,16 +69,11 @@
         </div>
 
         <div class="footer">
-            <p>Footer</p>
+           
         </div>
     </div>
 
-    <jsp:useBean id="customer" class="tables.Customer" />
-    <jsp:setProperty property="*" name="customer" />
 
-    <%
-   
-    %>
 
     <script type="text/javascript">
 

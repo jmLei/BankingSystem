@@ -27,8 +27,19 @@
 
     </head>
     <body>
+        <jsp:useBean id="account" class="tables.Account" />
+        <jsp:setProperty property="*" name="account" />
+
+        <%
+            String id = (String)session.getAttribute("ID");
+            List<List<String>>  tableData = new ArrayList<List<String>>();
+            BankingDatabase bdb = new BankingDatabase();
+            String name = bdb.getName(id);
+            tableData = bdb.accountSummary(id);
+        %>
         <div class="header">
             <h1>BANKING SYSTEM</h1>
+            <div class="cusName"> Hi, <%=name%></div>
             <form action="index.jsp" method="post">
                 <button class="logout">Logout</button>
             </form>
@@ -57,15 +68,6 @@
             <div class="column middle">
                 <div class="page head">Account Summary</div>
                 <div class="page body">
-                    <jsp:useBean id="account" class="tables.Account" />
-                    <jsp:setProperty property="*" name="account" />
-
-                    <%
-                        String id = (String)session.getAttribute("ID");
-                        List<List<String>>  tableData = new ArrayList<List<String>>();
-                        BankingDatabase bdb = new BankingDatabase();
-                        tableData = bdb.accountSummary(id);
-                    %>
                     <table id="summary">
                         <tr>
                             <th></th>
@@ -94,7 +96,7 @@
         </div>
 
         <div class="footer">
-            <p>Footer</p>
+            
         </div>
     </div>
 

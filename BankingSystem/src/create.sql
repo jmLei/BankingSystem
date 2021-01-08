@@ -19,7 +19,7 @@ ALTER TABLE customer AUTO_INCREMENT=100;
 create table account (
   number  integer     not null AUTO_INCREMENT,
   id      integer     not null,
-  balance integer     not null check (balance >= 0),
+  balance float     not null check (balance >= 0),
   type    char        not null check (type = 'C' or type = 'S'),
   status  char        not null check (status = 'A' or status = 'I'),
   constraint pk_number primary key (number),

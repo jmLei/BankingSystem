@@ -94,6 +94,8 @@
             BankingDatabase bdb = new BankingDatabase();
             if(x!=null && x.equals("Create")){
                 msg = bdb.newCustomer(customer);
+                String name = request.getParameter("name");
+                session.setAttribute("name",name);
             }
             else if(y!=null && y.equals("Login")){
                 String id = request.getParameter("id");

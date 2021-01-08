@@ -24,15 +24,37 @@
 
     </head>
     <body>
+        <jsp:useBean id="account" class="tables.Account" />
+        <jsp:setProperty property="*" name="account" />
+
+        <%
+            String x = request.getParameter("close");
+            String msg = "";
+            BankingDatabase bdb = new BankingDatabase();
+            String id = (String)session.getAttribute("ID");
+            String name = bdb.getName(id);
+            String number = request.getParameter("number");
+            if(x!=null && x.equals("Close Account")){
+                msg = bdb.closeAccount(number,id);
+            }
+        %>
+
+        <script type="text/javascript">
+        var msg = "<%=msg%>";
+        if (msg.localeCompare("") !== 0) {
+            alert(msg);
+        }
+        </script>
         <div class="header">
             <h1>BANKING SYSTEM</h1>
+            <div class="cusName"> Hi, <%=name%></div>
             <form action="index.jsp" method="post">
                 <button class="logout">Logout</button>
             </form>
         </div>
 
         <div class="topnav">
-             <a href="bankingsystem.jsp">Home</a>
+            <a href="bankingsystem.jsp">Home</a>
             <div class="dropdown">
                 <button class="dropbtn">Account
                     <i class="fa fa-caret-down"></i>
@@ -70,32 +92,9 @@
         </div>
 
         <div class="footer">
-            <p>Footer</p>
+            
         </div>
     </div>
 
-    <jsp:useBean id="account" class="tables.Account" />
-    <jsp:setProperty property="*" name="account" />
-
-    <%
-        String x = request.getParameter("close");
-        String msg = "";
-        BankingDatabase bdb = new BankingDatabase();
-        String id = (String)session.getAttribute("ID");
-        String number = request.getParameter("number");
-        if(x!=null && x.equals("Close Account")){
-            msg = bdb.closeAccount(number,id);
-            out.println("close");
-        }
-        out.println("id is "+ id);
-        out.println("msg is "+ msg);
-    %>
-
-    <script type="text/javascript">
-        var msg = "<%=msg%>";
-        if (msg.localeCompare("") !== 0) {
-            alert(msg);
-        }
-    </script>
 </body>
 </html>
